@@ -25,8 +25,8 @@ module.exports = function(grunt) {
 				cmd: function() {
 					return 'webpack dev/js/main.js example/public/js/bundle.js \n ' +
 					 'webpack dev/js/main.js example/public/js/bundle.min.js --optimize-minimize \n ' +
-					 'webpack dev/js/main.js dist/spa-router.js \n ' +
-					 'webpack dev/js/main.js dist/spa-router.min.js --optimize-minimize \n ';
+					 'webpack dev/js/main.js dist/push-router.js \n ' +
+					 'webpack dev/js/main.js dist/push-router.min.js --optimize-minimize \n ';
 				} 
 			}
 		}

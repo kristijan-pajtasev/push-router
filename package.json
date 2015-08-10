@@ -1,8 +1,8 @@
 {
-  "name": "spa-router",
-  "version": "0.0.0",
+  "name": "push-router",
+  "version": "0.0.2",
   "description": "",
-  "main": "dist/spa-router.min.js",
+  "main": "dev/js/Router.js",
   "scripts": {
     "test": "jasmine"
   },
