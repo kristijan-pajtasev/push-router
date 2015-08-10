@@ -6,12 +6,10 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		watch: {
 			es6: {
-		      // We watch and compile sass files as normal but don't live reload here 
 		      files: ['dev/es6/*.js', 'dev/es6/**/*.js'],
 		      tasks: ['exec:es6'],
 		   	},
 			webpack: {
-		      // We watch and compile sass files as normal but don't live reload here 
 		      files: ['dev/js/*.js', 'dev/js/**/*.js'],
 		      tasks: ['exec:webpack'],
 		   }
@@ -25,16 +23,15 @@ module.exports = function(grunt) {
 			},
 			webpack: {
 				cmd: function() {
-					return 'webpack dev/js/main.js public/js/bundle.js \n webpack dev/js/main.js public/js/bundle.min.js --optimize-minimize ';
-					// return 'webpack dev/js/main.js public/js/bundle.js --optimize-minimize ';
+					return 'webpack dev/js/main.js example/public/js/bundle.js \n ' +
+					 'webpack dev/js/main.js example/public/js/bundle.min.js --optimize-minimize \n ' +
+					 'webpack dev/js/main.js dist/spa-router.js \n ' +
+					 'webpack dev/js/main.js dist/spa-router.min.js --optimize-minimize \n ';
 				} 
 			}
 		}
 	});
 
-
-
-	// Default task(s).
 	grunt.registerTask('default', ['exec:es6', 'exec:webpack', 'watch']);
 
 };

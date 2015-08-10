@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	</head>
+	<body>
+		<a data-route="route" href="test">test</a>
+		<a data-route="route" href="test2">test2</a>
+		<a data-route="route" href="reg/1">reg/1</a>
+		<a data-route="route" href="reg/2">reg/2</a>
+		<a data-route="route" href="reg/3">reg/3</a>
+
+
+		<a data-route="route" href="param/1">param/1</a>
+		<a data-route="route" href="param/2">param/2</a>
+
+
+		<a data-route="route" href="two/1/1">two/1/1</a>
+		<a data-route="route" href="two/1/2">two/1/2</a>
+		<a data-route="route" href="two/2/1">two/2/1</a>
+		<a data-route="route" href="two/2/2">two/2/2</a>
+
+
+		<a data-route="route" href="regpar/1">regpar/1</a>
+		<a data-route="route" href="regpar/2">regpar/2</a>
+
+		<a data-route="route" href="optional/1">optional/1</a>
+		<a data-route="route" href="optional/">optional</a>
+		
+		<script type="text/javascript" src="/js/bundle.js"></script>
+		<script type="text/javascript">
+			Router.addRoute("test", function () {});
+
+			Router.addRoute("", function () {});
+
+			Router.addRoute("test2", function () {});
+
+			Router.addRoute("reg/{{\\d+}}", function () {
+			  console.log(arguments);
+			  console.log("reg");
+			});
+
+			Router.addRoute("param/{param}", function () {
+			  console.log("params");
+			  console.log(arguments);
+			});
+
+			Router.addRoute("two/{fist}/{second}", function () {
+			  console.log("two");
+			  console.log(arguments);
+			});
+
+			Router.addRoute("optional/{param}?", function () {
+			  console.log("optional/{param}?");
+			  console.log(arguments);
+			});
+
+			Router.init();
+		</script>
+	</body>
+</html>

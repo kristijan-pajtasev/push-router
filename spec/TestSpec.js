@@ -31,10 +31,3 @@ describe("A suite", function() {
 		expect(params[2]).toBe("2");
 	});
 });
-/*
-describe("A suite", function() {
-  it("contains spec with an expectation", function() {
-    expect(true).toBe(false);
-  });
-});
-*/
