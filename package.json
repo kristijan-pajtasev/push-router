@@ -15,5 +15,9 @@
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-exec": "~0.4.6"
+  },
+  "repository" : { 
+    "type" : "git",   
+    "url" : "https://github.com/kristijan-pajtasev/push-router.git"
   }
 }
