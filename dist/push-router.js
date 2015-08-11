@@ -87,6 +87,14 @@
 					var params = getParams(action.key, route);
 					action.action.apply(undefined, params);
 					return;
+				} else {
+					if (!!defaultRoute) {
+						defaultRoute(route);
+						event.stopPropagation();
+						event.preventDefault();
+					} else {
+						throw Error("No route was matched and. Default route is not defined.");
+					}
 				}
 			};
 
@@ -107,6 +115,18 @@
 							event.stopPropagation();
 							event.preventDefault();
 							return;
+						} else {
+							if (!!defaultRoute) {
+								history.pushState(undefined, "", "/" + route);
+								defaultRoute(route);
+								event.stopPropagation();
+								event.preventDefault();
+								return;
+							} else {
+								event.stopPropagation();
+								event.preventDefault();
+								throw Error("No route was matched and. Default route is not defined.");
+							}
 						}
 					} else {
 						element = element.parentElement;
@@ -140,6 +160,9 @@
 				registerHTML5Handler();
 			},
 			addRoute: function addRoute(route, callback) {
+				if (arguments.length < 0) {
+					throw Error("Insufficient number of arguments in addRoute");
+				}
 				route = route.replace(new RegExp("{{[^.]*}}", "gi"), function () {
 					if (arguments[0].indexOf(":") > 0) {
 						return "([" + arguments[0].slice(2, arguments[0].length - 2).split(":")[0] + "]+)";

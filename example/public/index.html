@@ -26,6 +26,8 @@
 
 		<a data-route="route" href="optional/1">optional/1</a>
 		<a data-route="route" href="optional/">optional</a>
+
+		<a data-route="route" href="undefinedroute">undefinedroute</a>
 		
 		<script type="text/javascript" src="/js/bundle.js"></script>
 		<script type="text/javascript">
@@ -52,6 +54,11 @@
 
 			Router.addRoute("optional/{param}?", function () {
 			  console.log("optional/{param}?");
+			  console.log(arguments);
+			});
+
+			Router.addDefaultRoute(function () {
+			  console.log("default");
 			  console.log(arguments);
 			});
 
