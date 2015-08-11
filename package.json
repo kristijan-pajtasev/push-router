@@ -1,7 +1,6 @@
 {
   "name": "push-router",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.1.2",
   "main": "dev/js/Router.js",
   "scripts": {
     "test": "jasmine"
