@@ -41,3 +41,16 @@ Router.addRoute(route, callback)
 ```
 Router.addDefaultRoute(callback)
 ```
+
+### Start listening for route changes
+
+```
+Router.init()
+```
+
+### Changing route
+Changing route works by clicking on a element with attribute data-route="route". Router
+will catch click and execute for route defined in href.
+```
+<a data-route="route" href="test">test</a>
+```
