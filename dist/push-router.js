@@ -105,29 +105,11 @@
 						break;
 					}
 					if (!!element.getAttribute("data-route")) {
-						var route = element.getAttribute("href");
+						event.stopPropagation();
+						event.preventDefault();
 
-						var action = getActionForRoute(route);
-						if (!!action) {
-							var params = getParams(action.key, route);
-							history.pushState(undefined, "", "/" + route);
-							action.action.apply(undefined, params);
-							event.stopPropagation();
-							event.preventDefault();
-							return;
-						} else {
-							if (!!defaultRoute) {
-								history.pushState(undefined, "", "/" + route);
-								defaultRoute(route);
-								event.stopPropagation();
-								event.preventDefault();
-								return;
-							} else {
-								event.stopPropagation();
-								event.preventDefault();
-								throw Error("No route was matched and. Default route is not defined.");
-							}
-						}
+						setRoute(element.getAttribute("href"));
+						return;
 					} else {
 						element = element.parentElement;
 					}
@@ -153,6 +135,25 @@
 			});
 			route += "/?";
 			return route;
+		}
+
+		function setRoute(route) {
+
+			var action = getActionForRoute(route);
+			if (!!action) {
+				var params = getParams(action.key, route);
+				history.pushState(undefined, "", "/" + route);
+				action.action.apply(undefined, params);
+				return;
+			} else {
+				if (!!defaultRoute) {
+					history.pushState(undefined, "", "/" + route);
+					defaultRoute(route);
+					return;
+				} else {
+					throw Error("No route was matched and. Default route is not defined.");
+				}
+			}
 		}
 
 		return {
@@ -181,7 +182,8 @@
 			},
 			getActionForRoute: getActionForRoute,
 			getParams: getParams,
-			parseRoute: parseRoute
+			parseRoute: parseRoute,
+			setRoute: setRoute
 		};
 	})();
 
