@@ -5,6 +5,10 @@
 	</head>
 	<body>
 		<a data-route="route" href="test">test</a>
+
+		<a data-route="route" href="test?param=1">test?param=1</a>
+		<a data-route="route" href="test/?param=2">test/?param=2</a>
+
 		<a data-route="route" href="test2">test2</a>
 		<a data-route="route" href="reg/1">reg/1</a>
 		<a data-route="route" href="reg/2">reg/2</a>
@@ -33,9 +37,10 @@
 		<script type="text/javascript">
 			Router.addRoute("test", function () {
 				console.log("test")
+				console.log(arguments)
 			});
 
-			Router.addRoute("", function () {});
+			Router.addRoute("", function () { console.log("empty") });
 
 			Router.addRoute("test2", function () {});
 

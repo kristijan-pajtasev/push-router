@@ -19,12 +19,29 @@ var Router = (function() {
 		
 		var params = path.match(paramsExp);
 		if(params.length > 1) {
+			if(params[params.length-1] != undefined) {
+				console.log("last is query")
+				params[params.length-1] = parseQuery(params[params.length-1]);
+			} else {
+				params = params.slice(0, params.length-1);
+			}
 			params = params.slice(1);
 			params = [path].concat(params);
 		} else {
 			params = [path];
 		}
 		return params;
+	}
+
+	function parseQuery(query) {console.log(query)
+		query = query.slice(1);
+		let values = query.split("&");
+		let queryValues = {};
+		for(let i = 0, length = values.length; i < length; i++) {
+			let value = values[i].split("=");
+			queryValues[value[0]] = !!value[1] ? value[1] : "";
+		}
+		return queryValues;
 	}
 
 	function registerHTML5Handler() {
@@ -38,8 +55,6 @@ var Router = (function() {
 			} else {
 				if(!!defaultRoute) {
 					defaultRoute(route);
-					event.stopPropagation();
-					event.preventDefault();
 				} else {
 					throw Error("No route was matched and. Default route is not defined.")
 				}
@@ -119,7 +134,7 @@ var Router = (function() {
 				}
 			});
 			route = route.replace(new RegExp("\{[^/]*\}", "gi"), function() { return "([^/]+)"}); 
-			route += "\/?"
+			route += "\/?(\\?.*)?"
 			routes[route] = callback;
 		},
 		addDefaultRoute: function(callback) {
