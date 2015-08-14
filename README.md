@@ -48,6 +48,14 @@ Router.addDefaultRoute(callback)
 Router.init()
 ```
 
+### Before route changed action
+To execute some action in between routes (etc sending for analytics) you can use
+addBeforeRouteChanged method. In it as a parameters you will receive previous route and next route.
+
+```
+Router.addBeforeRouteChanged(function(){})
+```
+
 ### Changing route
 Changing route works by clicking on a element with attribute data-route="route". Router
 will catch click and execute for route defined in href.

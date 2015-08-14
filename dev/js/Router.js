@@ -1,6 +1,8 @@
 var Router = (function () {
 	var routes = {};
 	var defaultRoute;
+	var previousRoute = "";
+	var beforeAction;
 
 	function getActionForRoute(path) {
 		var keys = Object.keys(routes);
@@ -51,6 +53,10 @@ var Router = (function () {
 			var action = getActionForRoute(route);
 			if (!!action) {
 				var params = getParams(action.key, route);
+				if (!!beforeAction) {
+					beforeAction(previousRoute, route);
+				}
+				previousRoute = route;
 				action.action.apply(undefined, params);
 				return;
 			} else {
@@ -107,11 +113,20 @@ var Router = (function () {
 		if (!!action) {
 			var params = getParams(action.key, route);
 			history.pushState(undefined, "", "/" + route);
+			if (!!beforeAction) {
+				beforeAction(previousRoute, route);
+			}
+			previousRoute = route;
+			history.pushState(undefined, "", "/" + route);
 			action.action.apply(undefined, params);
 			return;
 		} else {
 			if (!!defaultRoute) {
 				history.pushState(undefined, "", "/" + route);
+				if (!!beforeAction) {
+					beforeAction(previousRoute, route);
+				}
+				previousRoute = route;
 				defaultRoute(route);
 				return;
 			} else {
@@ -147,7 +162,10 @@ var Router = (function () {
 		getActionForRoute: getActionForRoute,
 		getParams: getParams,
 		parseRoute: parseRoute,
-		setRoute: setRoute
+		setRoute: setRoute,
+		addBeforeRouteChanged: function addBeforeRouteChanged(callback) {
+			beforeAction = callback;
+		}
 	};
 })();
 

@@ -35,6 +35,11 @@
 		
 		<script type="text/javascript" src="/js/bundle.js"></script>
 		<script type="text/javascript">
+			Router.addBeforeRouteChanged(function() {
+				console.log("before action");
+				console.log(arguments);
+			})
+
 			Router.addRoute("test", function () {
 				console.log("test")
 				console.log(arguments)
