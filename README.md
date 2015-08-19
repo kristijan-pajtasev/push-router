@@ -26,6 +26,18 @@ npm install push-router
 "push-router": "x.y.z"
 ```
 
+## Example
+There is example in example folder. It uses node and ExpressJS.
+To start it set position in terminal inside example folder.
+To install dependencies run:
+```
+npm install
+```
+To start it run:
+```
+node server/server.js
+```
+
 ## Usage
 
 ### Getting module
