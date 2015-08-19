@@ -100,7 +100,7 @@ var Router = (function () {
 				return "[" + arguments[0].slice(2, arguments[0].length - 2) + "]+";
 			}
 		});
-		route = route.replace(new RegExp("{[^/]*}", "gi"), function () {
+		route = route.replace(new RegExp("/?{[^/]*}", "gi"), function () {
 			return "([^/]+)";
 		});
 		route += "/?";
