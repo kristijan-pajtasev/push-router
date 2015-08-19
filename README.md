@@ -8,6 +8,10 @@ but slashes(/).
 This project is working but it is still in development.
 When it becames stable version will changed to 1. 
 
+If you are using this router and notice anything to be 
+improved please do send feedback to kristijan.pajtasev@hotmail.com
+ with subject push-router.
+
 ## Instalation
 
 ### CLI
