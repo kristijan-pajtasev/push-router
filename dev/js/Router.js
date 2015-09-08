@@ -36,7 +36,6 @@ var Router = (function () {
 	}
 
 	function parseQuery(query) {
-		console.log(query);
 		query = query.slice(1);
 		var values = query.split("&");
 		var queryValues = {};
@@ -92,6 +91,52 @@ var Router = (function () {
 		}
 	}
 
+	function registerHashHandler() {
+		window.onhashchange = function () {
+			var route = window.location.hash.slice(1);
+			var action = getActionForRoute(route);
+			if (!!action) {
+				var params = getParams(action.key, route);
+				if (!!beforeAction) {
+					beforeAction(previousRoute, route);
+				}
+				previousRoute = route;
+				action.action.apply(undefined, params);
+				return;
+			} else {
+				if (!!defaultRoute) {
+					defaultRoute(route);
+				} else {
+					throw Error("No route was matched and. Default route is not defined.");
+				}
+			}
+		};
+
+		document.body.addEventListener("click", function (event) {
+			var element = event.target;
+			while (true) {
+				if (element == document.body) {
+					break;
+				}
+				if (!!element.getAttribute("data-route")) {
+					event.stopPropagation();
+					event.preventDefault();
+
+					setRoute(element.getAttribute("href"));
+					return;
+				} else {
+					element = element.parentElement;
+				}
+			}
+		});
+
+		var path = window.location.pathname.slice(1);
+		if (routes[path] != undefined) {
+			routes[path]();
+		}
+
+	}
+
 	function parseRoute(route) {
 		route = route.replace(new RegExp("{{[^.]*}}", "gi"), function () {
 			if (arguments[0].indexOf(":") > 0) {
@@ -112,17 +157,29 @@ var Router = (function () {
 		var action = getActionForRoute(route);
 		if (!!action) {
 			var params = getParams(action.key, route);
-			history.pushState(undefined, "", "/" + route);
+			if(!!history) {
+				history.pushState(undefined, "", "/" + route);
+			} else {
+				window.location.hash = "#" + route;
+			}
 			if (!!beforeAction) {
 				beforeAction(previousRoute, route);
 			}
 			previousRoute = route;
-			history.pushState(undefined, "", "/" + route);
+			if(!!history) {
+				history.pushState(undefined, "", "/" + route);
+			} else {
+				window.location.hash = "#" + route;
+			}
 			action.action.apply(undefined, params);
 			return;
 		} else {
 			if (!!defaultRoute) {
-				history.pushState(undefined, "", "/" + route);
+				if(!!history) {
+					history.pushState(undefined, "", "/" + route);
+				} else {
+					window.location.hash = "#" + route;
+				}
 				if (!!beforeAction) {
 					beforeAction(previousRoute, route);
 				}
@@ -137,7 +194,11 @@ var Router = (function () {
 
 	return {
 		init: function init() {
-			registerHTML5Handler();
+			if(!!history) {
+				registerHTML5Handler();
+			} else {
+				registerHashHandler();
+			}
 		},
 		addRoute: function addRoute(route, callback) {
 			if (arguments.length < 0) {
